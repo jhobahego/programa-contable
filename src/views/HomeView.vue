@@ -1,9 +1,9 @@
 <script setup>
-import SalaryCalculator from '../components/SalaryCalculator.vue';
+import FormCreator from '../components/forms/FormCreator.vue';
 </script>
 
 <template>
   <main>
-    <SalaryCalculator />
+    <FormCreator msg="Registro de empleados" />
   </main>
 </template>
