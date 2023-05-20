@@ -19,7 +19,7 @@ function descontar(tipoDescuento) {
   } 
 
   if(confirm(`¿Seguro quieres descontar el 4% de la ${tipoDescuento} del salario?`)){
-    salario.value -= salario.value * 0.04;
+    salario.value -= Math.floor(salario.value * 0.04);
   }
 
   if(tipoDescuento === "salud"){
