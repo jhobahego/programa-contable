@@ -27,7 +27,7 @@ onMounted(async () => {
 <template>
 	<main>
 		<section class="card__container">
-			<div v-if="empleado == null">
+			<div v-if="empleados.length === 0">
 				<p>No hay empleados registrados</p>
 				<RouterLink class="navbar__link" to="/">Registrar empleado</RouterLink>
 			</div>
