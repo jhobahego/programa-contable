@@ -31,7 +31,7 @@ onMounted(async () => {
 				<p>No hay empleados registrados</p>
 				<RouterLink class="navbar__link" to="/">Registrar empleado</RouterLink>
 			</div>
-			<article class="card__empleados" v-for="empleado in empleados" :key="empleado._id">
+			<article v-else class="card__empleados" v-for="empleado in empleados" :key="empleado._id">
 				<h4 class="card__name">nombres: {{ empleado.nombres }}</h4>
 				<p class="card__description">numero de cedula: {{ empleado.num_cedula }}</p>
 				<p class="card__description">salario: {{ empleado.salario }}</p>
