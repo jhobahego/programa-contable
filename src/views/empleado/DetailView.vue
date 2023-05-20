@@ -73,7 +73,7 @@ onMounted(async () => {
 <template>
   <article>
     <h4>{{ nombres }}</h4>
-    <form @submit.prevent="actualizarSalario()">
+    <form>
       <label>
         salario:
         <input type="number" placeholder="1567200" v-model="salario">
@@ -87,7 +87,7 @@ onMounted(async () => {
           Descontar pensión
         </button>
       </div>
-      <button class="button__last" type="submit">
+      <button @click="actualizarSalario()" class="button__last">
         Descontar gastos
       </button>
     </form>
