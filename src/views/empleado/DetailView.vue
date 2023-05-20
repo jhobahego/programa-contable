@@ -1,8 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 
 const empleado = ref(null);
 const nombres = ref('');
@@ -45,7 +46,7 @@ async function actualizarSalario() {
     })
 
     if(respuesta.ok) {
-      route.push("/empleados");
+      router.push("/empleados");
     }
   } catch (error) {
     console.log(error);
