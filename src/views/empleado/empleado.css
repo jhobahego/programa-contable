@@ -17,3 +17,14 @@
 .card__description {
     margin-bottom: .3em;
 }
+
+button {
+    width: 90%;
+    margin-top: .8em;
+    padding: 1em 1em;
+    background-color: #05050596;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    border-radius: 8px;
+}
