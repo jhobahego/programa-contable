@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const empleados = ref(null)
 
-const route = useRoute();
+const route = useRouter();
 
 function irADescontar(cedula) {
 	route.push(`/${cedula}`);
