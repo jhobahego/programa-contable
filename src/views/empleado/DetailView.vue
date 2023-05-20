@@ -1,0 +1,131 @@
+<script setup>
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const empleado = ref(null);
+const nombres = ref('');
+const salario = ref(0);
+
+let contadorSalud = ref(0)
+let contadorPension = ref(0)
+
+function descontar(tipoDescuento) {
+  if(contadorPension.value > 0 && contadorSalud.value > 0){
+    alert(`Ya has descontado la ${tipoDescuento}`);
+    return;  
+  } 
+
+  if(confirm(`¿Seguro quieres descontar el 4% de la ${tipoDescuento} del salario?`)){
+    salario.value -= salario.value * 0.04;
+  }
+
+  if(tipoDescuento === "salud"){
+    contadorSalud.value++;
+  } else {
+    contadorPension.value++;
+  }
+}
+
+async function actualizarSalario() {
+  const nuevoEmpleado = {
+    salario: salario.value,
+  }
+
+  const id = empleado.value._id;
+
+  try {
+    const respuesta = await fetch(`https://backend-etica.onrender.com/empleados/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(nuevoEmpleado),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+
+    if(respuesta.ok) {
+      route.push("/empleados");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+onMounted(async () => {
+  const id = route.params.id;
+
+  try {
+    const respuesta = await fetch(`https://backend-etica.onrender.com/empleados/${id}`)
+    if(!respuesta.ok) return;
+
+    empleado.value = await respuesta.json();
+    nombres.value = empleado.value.nombres;
+    salario.value = empleado.value.salario;
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+</script>
+
+<template>
+  <article>
+    <h4>{{ nombres }}</h4>
+    <form @submit.prevent="actualizarSalario()">
+      <label>
+        salario:
+        <input type="number" placeholder="1567200" v-model="salario">
+      </label>
+
+      <div>
+        <button @click="descontar('salud')">
+          Descontar salud
+        </button>
+        <button @click="descontar('pension')">
+          Descontar pensión
+        </button>
+      </div>
+      <button class="button__last" type="submit">
+        Descontar gastos
+      </button>
+    </form>
+  </article>
+</template>
+
+<style scoped>
+
+article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 3em auto;
+  background-color: #00000075;
+  max-width: 400px;
+  border-radius: 8px;
+}
+
+h4 {
+  margin: 2em 0 .6em;
+}
+
+div {
+  display: flex;
+  gap: .4em;
+  margin: .8em 0;
+}
+
+button {
+  padding: .3em .4em;
+  font: inherit;
+  font-weight: 300;
+  color: #fff;
+  background-color: #00000075;
+}
+
+.button__last {
+  margin-bottom: 2em;
+}
+
+</style>
