@@ -31,7 +31,7 @@ onMounted(async () => {
 				<h4 class="card__name">nombres: {{ empleado.nombres }}</h4>
 				<p class="card__description">numero de cedula: {{ empleado.num_cedula }}</p>
 				<p class="card__description">salario: {{ empleado.salario }}</p>
-				<button @click="irADescontar(empleado.cedula)" >Descontar salario</button>
+				<button @click="irADescontar(empleado.num_cedula)" >Descontar salario</button>
 			</article>
 		</section>
 	</main>
