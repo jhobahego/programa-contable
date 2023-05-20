@@ -80,14 +80,14 @@ onMounted(async () => {
       </label>
 
       <div>
-        <button @click="descontar('salud')">
+        <button @click.prevent="descontar('salud')">
           Descontar salud
         </button>
-        <button @click="descontar('pension')">
+        <button @click.prevent="descontar('pension')">
           Descontar pensión
         </button>
       </div>
-      <button @click="actualizarSalario()" class="button__last">
+      <button @click.prevent="actualizarSalario()" class="button__last">
         Descontar gastos
       </button>
     </form>
