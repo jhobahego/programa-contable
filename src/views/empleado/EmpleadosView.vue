@@ -4,10 +4,10 @@ import { useRouter } from 'vue-router';
 
 const empleados = ref(null)
 
-const route = useRouter();
+const router = useRouter();
 
 function irADescontar(cedula) {
-	route.push(`/${cedula}`);
+	router.push(`/empleados/${cedula}`);
 }
 
 onMounted(async () => {
