@@ -1,0 +1,14 @@
+.card__container{
+    padding: 60px 3em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    margin: .8em auto;
+    gap: 4em;
+    align-items: center;
+    justify-content: center; 
+    background: #00000075;
+}
+.card__empleados{
+    display: flex;
+    margin-bottom: 2em;
+}
