@@ -27,8 +27,8 @@ onMounted(async () => {
 <template>
 	<main>
 		<section class="card__container">
-			<p v-if="empleado.value == null">No hay empleados registrados</p>
-			<RouterLink class="navbar__link" to="/">Registrar empleado</RouterLink>
+			<p v-if="empleado == null">No hay empleados registrados</p>
+			<RouterLink v-if="empleado == null" class="navbar__link" to="/">Registrar empleado</RouterLink>
 			<article class="card__empleados" v-for="empleado in empleados" :key="empleado._id">
 				<h4 class="card__name">nombres: {{ empleado.nombres }}</h4>
 				<p class="card__description">numero de cedula: {{ empleado.num_cedula }}</p>
