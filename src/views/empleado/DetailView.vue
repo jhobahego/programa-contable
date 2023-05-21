@@ -1,8 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 
 const empleado = ref(null);
 const nombres = ref('');
@@ -18,7 +19,7 @@ function descontar(tipoDescuento) {
   } 
 
   if(confirm(`¿Seguro quieres descontar el 4% de la ${tipoDescuento} del salario?`)){
-    salario.value -= salario.value * 0.04;
+    salario.value -= Math.floor(salario.value * 0.04);
   }
 
   if(tipoDescuento === "salud"){
@@ -45,7 +46,7 @@ async function actualizarSalario() {
     })
 
     if(respuesta.ok) {
-      route.push("/empleados");
+      router.push("/empleados");
     }
   } catch (error) {
     console.log(error);
@@ -72,21 +73,21 @@ onMounted(async () => {
 <template>
   <article>
     <h4>{{ nombres }}</h4>
-    <form @submit.prevent="actualizarSalario()">
+    <form>
       <label>
         salario:
         <input type="number" placeholder="1567200" v-model="salario">
       </label>
 
       <div>
-        <button @click="descontar('salud')">
+        <button @click.prevent="descontar('salud')">
           Descontar salud
         </button>
-        <button @click="descontar('pension')">
+        <button @click.prevent="descontar('pension')">
           Descontar pensión
         </button>
       </div>
-      <button class="button__last" type="submit">
+      <button @click.prevent="actualizarSalario()" class="button__last">
         Descontar gastos
       </button>
     </form>
