@@ -1,0 +1,19 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/empleados"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/empleados/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/empleados/:id"
+  to = "/index.html"
+  status = 200
