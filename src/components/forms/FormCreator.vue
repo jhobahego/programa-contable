@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const nombres = ref(null);
 const numCedula = ref(null);
@@ -29,7 +32,9 @@ async function guardarEmpleado() {
     })
 
     if (!respuesta.ok) return;
-    alert("usuario creado correctamente");
+    
+    alert("empledo registrado correctamente");
+    router.push("/empleados");
   } catch (error) {
     console.log(error);
   }
@@ -42,15 +47,15 @@ async function guardarEmpleado() {
   <article class="form__container">
     <h3 class="form__title">¿Quien es usted?</h3>
     <form @submit.prevent="guardarEmpleado()" class="form">
-      <label>
+      <label class="form__label">
         Ingrese su nombre:
         <input class="form__input" type="text" placeholder="jhon bairo" v-model="nombres">
       </label>
-      <label>
+      <label class="form__label">
         Ingrese su cedula:
         <input class="form__input" type="text" placeholder="1002667412" v-model="numCedula">
       </label>
-      <label>
+      <label class="form__label">
         Ingrese su salario:
         <input class="form__input" type="number" placeholder="1002667412" v-model="salario">
       </label>
