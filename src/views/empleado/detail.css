@@ -7,10 +7,23 @@
   background-color: #00000075;
   max-width: 400px;
   border-radius: 8px;
+  padding: .2em 2em;
 }
 
 .detail__title {
-  margin: 2em 0 .6em;
+  margin: 1.5em 0 .8em;
+}
+
+.detail__label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.detail__label > input {
+  width: 100%;
+
 }
 
 .detail__buttons {
@@ -20,6 +33,7 @@
 }
 
 button {
+  width: 100%;
   padding: .3em .4em;
   font: inherit;
   font-weight: 300;

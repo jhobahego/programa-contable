@@ -74,7 +74,7 @@ onMounted(async () => {
   <article class="detail__card">
     <h4 class="detail__title">{{ nombres }}</h4>
     <form class="detail__form">
-      <label>
+      <label class="detail__label">
         salario:
         <input type="number" placeholder="1567200" v-model="salario">
       </label>
