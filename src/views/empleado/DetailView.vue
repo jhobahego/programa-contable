@@ -13,19 +13,16 @@ let contadorSalud = ref(0)
 let contadorPension = ref(0)
 
 function descontar(tipoDescuento) {
-  if(contadorPension.value > 0 && contadorSalud.value > 0){
-    alert(`Ya has descontado la ${tipoDescuento}`);
-    return;  
-  } 
+  const contador = tipoDescuento === "salud" ? contadorSalud : contadorPension;
 
-  if(confirm(`¿Seguro quieres descontar el 4% de la ${tipoDescuento} del salario?`)){
-    salario.value -= Math.floor(salario.value * 0.04);
+  if (contador.value === 1) {
+    alert(`Ya has descontado la ${tipoDescuento}`);
+    return;
   }
 
-  if(tipoDescuento === "salud"){
-    contadorSalud.value++;
-  } else {
-    contadorPension.value++;
+  if (confirm(`¿Seguro quieres descontar el 4% de la ${tipoDescuento} del salario?`)) {
+    salario.value -= Math.floor(salario.value * 0.04);
+    contador.value++;
   }
 }
 
@@ -45,7 +42,7 @@ async function actualizarSalario() {
       }
     })
 
-    if(respuesta.ok) {
+    if (respuesta.ok) {
       router.push("/empleados");
     }
   } catch (error) {
@@ -58,7 +55,7 @@ onMounted(async () => {
 
   try {
     const respuesta = await fetch(`https://backend-etica.onrender.com/empleados/${id}`)
-    if(!respuesta.ok) return;
+    if (!respuesta.ok) return;
 
     empleado.value = await respuesta.json();
     nombres.value = empleado.value.nombres;
