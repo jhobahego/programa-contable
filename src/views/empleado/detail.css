@@ -1,0 +1,32 @@
+.detail__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 3em auto;
+  background-color: #00000075;
+  max-width: 400px;
+  border-radius: 8px;
+}
+
+.detail__title {
+  margin: 2em 0 .6em;
+}
+
+.detail__buttons {
+  display: flex;
+  gap: .4em;
+  margin: .8em 0;
+}
+
+button {
+  padding: .3em .4em;
+  font: inherit;
+  font-weight: 300;
+  color: #fff;
+  background-color: #00000075;
+}
+
+.button__last {
+  margin-bottom: 2em;
+}

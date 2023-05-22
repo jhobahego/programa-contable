@@ -71,15 +71,15 @@ onMounted(async () => {
 </script>
 
 <template>
-  <article>
-    <h4>{{ nombres }}</h4>
-    <form>
+  <article class="detail__card">
+    <h4 class="detail__title">{{ nombres }}</h4>
+    <form class="detail__form">
       <label>
         salario:
         <input type="number" placeholder="1567200" v-model="salario">
       </label>
 
-      <div>
+      <div class="detail__buttons">
         <button @click.prevent="descontar('salud')">
           Descontar salud
         </button>
@@ -95,38 +95,5 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
-article {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 3em auto;
-  background-color: #00000075;
-  max-width: 400px;
-  border-radius: 8px;
-}
-
-h4 {
-  margin: 2em 0 .6em;
-}
-
-div {
-  display: flex;
-  gap: .4em;
-  margin: .8em 0;
-}
-
-button {
-  padding: .3em .4em;
-  font: inherit;
-  font-weight: 300;
-  color: #fff;
-  background-color: #00000075;
-}
-
-.button__last {
-  margin-bottom: 2em;
-}
-
+@import url(detail.css);
 </style>
