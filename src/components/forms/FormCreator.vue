@@ -31,7 +31,10 @@ async function guardarEmpleado() {
       }
     })
 
-    if (!respuesta.ok) return;
+    if (respuesta.status === 400) {
+      alert("Cedula ya registrada");
+      return;
+    }
     
     alert("empledo registrado correctamente");
     router.push("/empleados");
