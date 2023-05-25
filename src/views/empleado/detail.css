@@ -46,3 +46,12 @@ button {
 .button__last {
   margin: .2em 0 1.5em;
 }
+
+@media screen and (max-width: 425px) {
+  .detail__card {
+    width: 85%;
+  }
+  button {
+    font-size: 14px;
+  }
+}
