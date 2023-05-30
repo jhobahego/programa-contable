@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -8,6 +8,16 @@ const router = useRouter();
 const empleado = ref(null);
 const nombres = ref('');
 const salario = ref(0);
+
+const ocultarDescuentoSalud = ref(false)
+const ocultarDescuentoPension = ref(false)
+
+const salarioDescontado = computed(() => {
+  const descuento = (salario.value * 4) / 100;
+  return salario.value - descuento;
+});
+
+const salarioPorDescontar = computed(() => (salario.value * 4) / 100);
 
 let contadorSalud = ref(0)
 let contadorPension = ref(0)
@@ -21,7 +31,11 @@ function descontar(tipoDescuento) {
   }
 
   if (confirm(`¿Seguro quieres descontar el 4% de la ${tipoDescuento} del salario?`)) {
-    salario.value -= Math.floor(salario.value * 0.04);
+    if (tipoDescuento === "salud") {
+      ocultarDescuentoSalud.value = true;
+    } else {
+      ocultarDescuentoPension.value = true;
+    }
     contador.value++;
   }
 }
@@ -72,15 +86,24 @@ onMounted(async () => {
     <h4 class="detail__title">{{ nombres }}</h4>
     <form class="detail__form">
       <label class="detail__label">
-        salario:
-        <input type="number" placeholder="1567200" v-model="salario">
+        salario actual del empleado
+        <input type="number" placeholder="1567200" v-model="salario" readonly>
       </label>
 
+      <label class="detail__label detail__label--last" v-if="ocultarDescuentoPension | ocultarDescuentoSalud">
+        salario con el descuento aplicado
+        <input type="number" placeholder="1567200" v-model="salarioDescontado" readonly>
+      </label>
+
+      <strong v-if="!ocultarDescuentoSalud">valor a descontar por salud {{ salarioPorDescontar }}</strong>
+      <strong v-if="!ocultarDescuentoPension">valor a descontar por pension {{ salarioPorDescontar }}</strong>
+      <strong v-if="ocultarDescuentoPension && ocultarDescuentoSalud">no se puede descontar más</strong>
+
       <div class="detail__buttons">
-        <button @click.prevent="descontar('salud')">
+        <button @click.prevent="descontar('salud')" :disabled="ocultarDescuentoSalud">
           Descontar salud
         </button>
-        <button @click.prevent="descontar('pension')">
+        <button @click.prevent="descontar('pension')" :disabled="ocultarDescuentoPension">
           Descontar pensión
         </button>
       </div>
