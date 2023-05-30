@@ -3,6 +3,7 @@ import { onMounted, ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 import { actualizarSalario, obtenerEmpleado } from '@/services/empleado/Empleado';
+import { aplicarDescuento } from '@/services/Utils';
 
 const route = useRoute();
 const router = useRouter();
@@ -27,19 +28,7 @@ let contadorPension = ref(0)
 function descontar(tipoDescuento) {
   const contador = tipoDescuento === "salud" ? contadorSalud : contadorPension;
 
-  if (contador.value === 1) {
-    alert(`Ya has descontado la ${tipoDescuento}`);
-    return;
-  }
-
-  if (confirm(`¿Seguro quieres descontar el 4% de la ${tipoDescuento} del salario?`)) {
-    if (tipoDescuento === "salud") {
-      ocultarDescuentoSalud.value = true;
-    } else {
-      ocultarDescuentoPension.value = true;
-    }
-    contador.value++;
-  }
+  aplicarDescuento(tipoDescuento, contador, ocultarDescuentoPension, ocultarDescuentoSalud);
 }
 
 async function descontarSalario() {
