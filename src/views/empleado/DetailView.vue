@@ -2,6 +2,8 @@
 import { onMounted, ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
+import { actualizarSalario, obtenerEmpleado } from '@/services/empleado/Empleado';
+
 const route = useRoute();
 const router = useRouter();
 
@@ -40,43 +42,26 @@ function descontar(tipoDescuento) {
   }
 }
 
-async function actualizarSalario() {
+async function descontarSalario() {
   const nuevoEmpleado = {
     salario: salario.value,
   }
 
   const id = empleado.value._id;
 
-  try {
-    const respuesta = await fetch(`https://backend-etica.onrender.com/empleados/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(nuevoEmpleado),
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-
-    if (respuesta.ok) {
-      router.push("/empleados");
-    }
-  } catch (error) {
-    console.log(error);
+  const nuevoSalario = await actualizarSalario(id, nuevoEmpleado);
+  if(nuevoSalario){
+    router.push("/empleados");
   }
 }
 
 onMounted(async () => {
   const id = route.params.id;
+  const empleadobd = await obtenerEmpleado(id);
 
-  try {
-    const respuesta = await fetch(`https://backend-etica.onrender.com/empleados/${id}`)
-    if (!respuesta.ok) return;
-
-    empleado.value = await respuesta.json();
-    nombres.value = empleado.value.nombres;
-    salario.value = empleado.value.salario;
-  } catch (error) {
-    console.log(error);
-  }
+  empleado.value = empleadobd;
+  nombres.value = empleado.value.nombres;
+  salario.value = empleado.value.salario;
 })
 
 </script>
@@ -107,7 +92,7 @@ onMounted(async () => {
           Descontar pensión
         </button>
       </div>
-      <button @click.prevent="actualizarSalario()" class="button__last">
+      <button @click.prevent="descontarSalario()" class="button__last">
         Descontar gastos
       </button>
     </form>
