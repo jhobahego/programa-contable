@@ -1,4 +1,4 @@
-export function aplicarDescuento(tipoDescuento, contador, ocultarDescuentoPension, ocultarDescuentoSalud) {
+export function aplicarDescuento(tipoDescuento, contador, salario, salarioPorDescontar, ocultarDescuentoPension, ocultarDescuentoSalud) {
   if (contador.value === 1) {
     alert(`Ya has descontado la ${tipoDescuento}`);
     return;
@@ -12,4 +12,6 @@ export function aplicarDescuento(tipoDescuento, contador, ocultarDescuentoPensio
     }
     contador.value++;
   }
+
+  salario.value -= salarioPorDescontar;
 }
