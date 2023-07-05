@@ -10,12 +10,19 @@ function irADescontar(cedula) {
 	router.push(`/empleados/${cedula}`);
 }
 
+function filtrarUsuarios(usuarios) {
+	console.log(usuarios);
+	return usuarios.filter(usuario => usuario.pension_descontada === false || usuario.salud_descontada === false);
+}
+
 onMounted(async () => {
 	try {
 		const respuesta = await fetch("https://backend-etica.onrender.com/empleados");
 		if (!respuesta.ok) return;
 
-		empleados.value = await respuesta.json();
+		const usuarios = await respuesta.json();
+
+		empleados.value = filtrarUsuarios(usuarios);
 	} catch (error) {
 		console.log(error);
 	}

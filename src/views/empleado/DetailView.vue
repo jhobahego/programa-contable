@@ -62,13 +62,16 @@ const descontar = (tipoDescuento) => {
     salario,
     salarioPorDescontar.value,
     ocultarDescuentoPension,
-    ocultarDescuentoSalud
+    ocultarDescuentoSalud,
+    empleado
   );
 };
 
 const descontarSalario = async () => {
   const nuevoEmpleado = {
     salario: salario.value,
+    pension_descontada: ocultarDescuentoPension.value,
+    salud_descontada: ocultarDescuentoSalud.value
   };
 
   const id = empleado.value._id;
@@ -82,11 +85,14 @@ const descontarSalario = async () => {
 onMounted(async () => {
   const id = route.params.id;
   const empleadobd = await obtenerEmpleado(id);
+  console.log(empleadobd);
 
   empleado.value = empleadobd;
   nombres.value = empleado.value.nombres;
   salario.value = empleado.value.salario;
   salarioInicial.value = empleado.value.salario;
+  ocultarDescuentoSalud.value = empleado.value.salud_descontada;
+  ocultarDescuentoPension.value = empleado.value.pension_descontada;
 });
 </script>
 
