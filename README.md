@@ -16,6 +16,11 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 pnpm install
 ```
 
+### Add Environment Variables
+```sh
+VITE_API_URL=your_api_url
+```
+
 ### Compile and Hot-Reload for Development
 
 ```sh

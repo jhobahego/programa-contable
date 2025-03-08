@@ -1,6 +1,8 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function obtenerEmpleado(id) {
   try {
-    const respuesta = await fetch(`https://backend-etica.onrender.com/empleados/${id}`)
+    const respuesta = await fetch(`${API_URL}/empleados/${id}`)
     if (!respuesta.ok) return;
 
     const empleado = await respuesta.json();
@@ -12,7 +14,7 @@ export async function obtenerEmpleado(id) {
 
 export async function actualizarSalario(id, nuevoEmpleado) {
   try {
-    const respuesta = await fetch(`https://backend-etica.onrender.com/empleados/${id}`, {
+    const respuesta = await fetch(`${API_URL}/empleados/${id}`, {
       method: "PUT",
       body: JSON.stringify(nuevoEmpleado),
       headers: {
