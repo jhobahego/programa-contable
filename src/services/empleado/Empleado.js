@@ -1,5 +1,16 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+export async function obtenerEmpleados() {
+  try {
+    const respuesta = await fetch(`${API_URL}/empleados`)
+    if (!respuesta.ok) return;
+
+    return await respuesta.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function obtenerEmpleado(id) {
   try {
     const respuesta = await fetch(`${API_URL}/empleados/${id}`)

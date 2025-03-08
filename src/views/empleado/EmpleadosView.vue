@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { obtenerEmpleados } from '@/services/empleado/Empleado';
 
 const empleados = ref(null)
 
@@ -16,16 +17,9 @@ function filtrarUsuarios(usuarios) {
 }
 
 onMounted(async () => {
-	try {
-		const respuesta = await fetch("https://backend-etica.onrender.com/empleados");
-		if (!respuesta.ok) return;
+	const usuarios = await obtenerEmpleados();
 
-		const usuarios = await respuesta.json();
-
-		empleados.value = filtrarUsuarios(usuarios);
-	} catch (error) {
-		console.log(error);
-	}
+	empleados.value = filtrarUsuarios(usuarios);
 })
 
 </script>
