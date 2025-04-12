@@ -1,6 +1,8 @@
+import { showWarningToast } from './toastService';
+
 export function aplicarDescuento(tipoDescuento, contador, salario, salarioPorDescontar, ocultarDescuentoPension, ocultarDescuentoSalud) {
   if (contador.value === 1) {
-    alert(`Ya has descontado la ${tipoDescuento}`);
+    showWarningToast(`Ya has descontado la ${tipoDescuento}`); // Use warning toast
     return;
   }
 
@@ -11,7 +13,11 @@ export function aplicarDescuento(tipoDescuento, contador, salario, salarioPorDes
       ocultarDescuentoPension.value = true;
     }
     contador.value++;
+    salario.value -= salarioPorDescontar;
+  } else {
+    // Optional: Show a toast if the user cancels
+    // showInfoToast("Descuento cancelado");
   }
 
-  salario.value -= salarioPorDescontar;
+  // Removed redundant salary subtraction outside confirm block
 }

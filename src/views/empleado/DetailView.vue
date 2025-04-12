@@ -36,6 +36,7 @@ import { useRouter, useRoute } from 'vue-router';
 
 import { actualizarSalario, obtenerEmpleado } from '@/services/empleado/Empleado';
 import { aplicarDescuento } from '@/services/Utils';
+import { showInfoToast } from '@/services/toastService';
 
 const route = useRoute();
 const router = useRouter();
@@ -55,6 +56,7 @@ const contadorPension = ref(0)
 
 const descontar = (tipoDescuento) => {
   const contador = tipoDescuento === 'salud' ? contadorSalud : contadorPension;
+  const salarioAntes = salario.value;
 
   aplicarDescuento(
     tipoDescuento,
@@ -65,6 +67,11 @@ const descontar = (tipoDescuento) => {
     ocultarDescuentoSalud,
     empleado
   );
+
+  // Show info toast only if the discount was applied (salary changed)
+  if (salario.value !== salarioAntes) {
+    showInfoToast(`Descuento de ${tipoDescuento} aplicado. Nuevo salario temporal: ${salario.value}`);
+  }
 };
 
 const descontarSalario = async () => {

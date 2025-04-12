@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { crearEmpleado } from '@/services/empleado/Empleado';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -22,24 +23,9 @@ async function guardarEmpleado() {
     salario: salario.value
   }
 
-  try {
-    const respuesta = await fetch("https://backend-etica.onrender.com/empleados", {
-      method: "POST",
-      body: JSON.stringify(empleado),
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-
-    if (respuesta.status === 400) {
-      alert("Cedula ya registrada");
-      return;
-    }
-    
-    alert("empledo registrado correctamente");
+  const nuevoEmpleado = await crearEmpleado(empleado);
+  if (nuevoEmpleado) {
     router.push("/empleados");
-  } catch (error) {
-    console.log(error);
   }
 }
 

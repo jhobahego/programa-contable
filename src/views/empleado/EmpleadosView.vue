@@ -18,6 +18,10 @@ function filtrarUsuarios(usuarios) {
 
 onMounted(async () => {
 	const usuarios = await obtenerEmpleados();
+	if (!usuarios) {
+		router.push("/");
+		return;
+	}
 
 	empleados.value = filtrarUsuarios(usuarios);
 })
