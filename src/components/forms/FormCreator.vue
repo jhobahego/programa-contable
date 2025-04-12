@@ -42,7 +42,7 @@ async function guardarEmpleado() {
       </label>
       <label class="form__label">
         Ingrese su cedula:
-        <input class="form__input" type="text" placeholder="1002667412" v-model="numCedula">
+        <input class="form__input" type="number" placeholder="1002667412" v-model="numCedula">
       </label>
       <label class="form__label">
         Ingrese su salario:
