@@ -5,12 +5,15 @@ const API_URL = import.meta.env.VITE_API_URL;
 export async function obtenerEmpleados() {
   try {
     const respuesta = await fetch(`${API_URL}/empleados`)
-    if (!respuesta.ok) return;
+    if (!respuesta.ok) {
+      return [];
+    }
 
     return await respuesta.json();
   } catch (error) {
     showErrorToast("Ha ocurrido un error, intenta nuevamente más tarde");
     console.log(error);
+    return [];
   }
 }
 

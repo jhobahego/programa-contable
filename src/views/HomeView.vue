@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { obtenerEmpleados } from '@/services/empleado/Empleado';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const empleados = ref([]);
 const stats = ref({
@@ -12,10 +15,10 @@ const stats = ref({
 
 onMounted(async () => {
   const data = await obtenerEmpleados();
-  if (data) {
-    empleados.value = data;
-    calcularEstadisticas();
-  }
+  if (data.length == 0) router.push('/registro');
+
+  empleados.value = data;
+  calcularEstadisticas();
 });
 
 function calcularEstadisticas() {

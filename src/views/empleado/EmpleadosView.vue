@@ -31,11 +31,8 @@ function filtrarEmpleados() {
 
 onMounted(async () => {
   const data = await obtenerEmpleados();
-  if (!data) {
-    router.push("/");
-    return;
-  }
-  empleados.value = data;
+
+	empleados.value = data.length > 0 ? data : [];
 });
 </script>
 
