@@ -31,6 +31,7 @@ export async function obtenerEmpleado(id) {
 }
 
 export async function crearEmpleado(empleado) {
+  console.log({ empleado });
   try {
     const respuesta = await fetch(`${API_URL}/empleados`, {
       method: "POST",
