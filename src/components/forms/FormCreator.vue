@@ -2,27 +2,35 @@
 import { ref } from 'vue'
 import { crearEmpleado } from '@/services/empleado/Empleado';
 import { useRouter } from 'vue-router';
+import { validarFormulario } from '@/services/Utils';
 
 const router = useRouter();
 
-const nombres = ref(null);
+const nombres = ref("");
 const numCedula = ref(null);
 const salario = ref(null);
 
-async function guardarEmpleado() {
-  if (!nombres.value || !numCedula.value || !salario.value) {
-    return;
-  }
+const errores = ref({
+  nombres: "",
+  numCedula: "",
+  salario: ""
+});
 
+async function guardarEmpleado() {
   const empleado = {
     nombres: nombres.value,
     num_cedula: numCedula.value,
-    salario: Number(salario.value),
-    pension_descontada: false,
-    salud_descontada: false,
+    salario: salario.value
   }
 
-  const nuevoEmpleado = await crearEmpleado(empleado);
+  const { isValid, errors } = validarFormulario({ empleado });
+
+  if (!isValid) {
+    errores.value = errors;
+    return;
+  }
+
+  const nuevoEmpleado = await crearEmpleado({...empleado, salario: Number(salario.value)});
   if (nuevoEmpleado) {
     router.push("/empleados");
   }
@@ -38,34 +46,43 @@ async function guardarEmpleado() {
         <div class="form-group">
           <label>Nombre completo</label>
           <input 
-            class="form-control" 
+            class="form-control"
+            :class="{ 'error': errores.nombres }"
             type="text" 
             placeholder="John Doe" 
             v-model="nombres"
-            required
           >
+          <small v-if="errores.nombres" class="error-text">
+            {{ errores.nombres }}
+          </small>
         </div>
 
         <div class="form-group">
           <label>Número de cédula</label>
           <input 
-            class="form-control" 
+            class="form-control"
+            :class="{ 'error': errores.numCedula }"
             type="number" 
             placeholder="1002667412" 
             v-model="numCedula"
-            required
           >
+          <small v-if="errores.numCedula" class="error-text">
+            {{ errores.numCedula }}
+          </small>
         </div>
 
         <div class="form-group">
           <label>Salario base</label>
           <input 
-            class="form-control" 
+            class="form-control"
+            :class="{ 'error': errores.salario }"
             type="number" 
             placeholder="1500000" 
             v-model="salario"
-            required
           >
+          <small v-if="errores.salario" class="error-text">
+            {{ errores.salario }}
+          </small>
         </div>
 
         <button type="submit" class="btn btn-primary">
@@ -96,5 +113,15 @@ label {
 
 .btn {
   margin-top: 1rem;
+}
+
+.form-control.error {
+  border-color: #dc3545;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 40px;
 }
 </style>

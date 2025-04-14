@@ -21,3 +21,40 @@ export function aplicarDescuento(tipoDescuento, contador, salario, salarioPorDes
 
   // Removed redundant salary subtraction outside confirm block
 }
+
+
+export function validarFormulario({ empleado }) {
+  let isValid = true;
+  let errors = {
+    nombres: '',
+    numCedula: '',
+    salario: ''
+  };
+
+  const { nombres, num_cedula, salario } = empleado;
+
+  if (nombres.trim().length < 3) {
+    errors.nombres = 'El nombre debe tener al menos 3 caracteres';
+    isValid = false;
+  }
+  
+  if (num_cedula == null) {
+    errors.numCedula = 'La cédula es requerida';
+    isValid = false;
+  }
+
+  if (salario <= 0) {
+    errors.salario = 'El salario debe ser mayor a 0';
+    isValid = false;
+  }
+
+  if (salario == null) {
+    errors.salario = 'El salario es requerido';
+    isValid = false;
+  }
+
+  return {
+    isValid,
+    errors
+  };
+}
