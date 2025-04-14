@@ -2,6 +2,8 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { onMounted } from 'vue'
 import { useTheme } from './composables/useTheme'
+import ToastContainer from './components/toast/ToastContainer.vue';
+import ConfirmToast from './components/toast/ConfirmToast.vue'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
 
@@ -29,6 +31,9 @@ onMounted(() => {
     <main class="main-content">
       <RouterView />
     </main>
+
+    <ToastContainer />
+    <ConfirmToast />
   </div>
 </template>
 

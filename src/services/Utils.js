@@ -1,12 +1,17 @@
-import { showWarningToast } from './toastService';
+import { showWarningToast, showInfoToast } from './toastService';
+import { useConfirmToast } from '@/composables/useConfirmToast';
 
-export function aplicarDescuento(tipoDescuento, contador, salario, salarioPorDescontar, ocultarDescuentoPension, ocultarDescuentoSalud) {
+const confirmToast = useConfirmToast();
+
+export async function aplicarDescuento(tipoDescuento, contador, salario, salarioPorDescontar, ocultarDescuentoPension, ocultarDescuentoSalud) {
   if (contador.value === 1) {
-    showWarningToast(`Ya has descontado la ${tipoDescuento}`); // Use warning toast
+    showWarningToast(`Ya has descontado la ${tipoDescuento}`);
     return;
   }
 
-  if (confirm(`¿Seguro quieres descontar el 4% de la ${tipoDescuento} del salario?`)) {
+  const confirmed = await confirmToast.showConfirm(`¿Desea descontar el 4% de la ${tipoDescuento} del salario?`);
+  
+  if (confirmed) {
     if (tipoDescuento === "salud") {
       ocultarDescuentoSalud.value = true;
     } else {
@@ -14,14 +19,11 @@ export function aplicarDescuento(tipoDescuento, contador, salario, salarioPorDes
     }
     contador.value++;
     salario.value -= salarioPorDescontar;
+    showInfoToast(`Descuento de ${tipoDescuento} aplicado correctamente`);
   } else {
-    // Optional: Show a toast if the user cancels
-    // showInfoToast("Descuento cancelado");
+    showInfoToast("Descuento cancelado");
   }
-
-  // Removed redundant salary subtraction outside confirm block
 }
-
 
 export function validarFormulario({ empleado }) {
   let isValid = true;
