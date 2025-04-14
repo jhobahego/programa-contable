@@ -60,3 +60,16 @@ export function validarFormulario({ empleado }) {
     errors
   };
 }
+
+export const mapFields = {
+  nombres: "Nombre completo",
+  num_cedula: "Número de cédula",
+  salario: "Salario base",
+  hashed_password: "Contraseña"
+};
+
+export const messages = {
+  "Input should be a valid integer": "El campo debe ser un número entero.",
+  "Input should be a valid float": "El campo debe ser un número decimal.",
+  "Field required": "Campo requerido",
+};

@@ -1,18 +1,24 @@
 import { showSuccessToast, showErrorToast } from "@/services/toastService";
+import { mapFields, messages } from "@/services/Utils";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export async function obtenerEmpleados() {
   try {
     const respuesta = await fetch(`${API_URL}/empleados`)
-    if (!respuesta.ok) {
+    const { ok, status } = respuesta;
+    if (!ok) {
+      if (status === 401) {
+        showErrorToast("No tienes permiso para acceder a esta información.");
+      } else {
+        showErrorToast("Error al obtener la lista de empleados.");
+      }
       return [];
     }
 
     return await respuesta.json();
   } catch (error) {
-    showErrorToast("Ha ocurrido un error, intenta nuevamente más tarde");
-    console.log(error);
+    showErrorToast("Error de red al obtener empleados. Intenta nuevamente.");
     return [];
   }
 }
@@ -21,15 +27,19 @@ export async function obtenerEmpleado(id) {
   try {
     const respuesta = await fetch(`${API_URL}/empleados/${id}`)
     if (!respuesta.ok) {
-      showErrorToast("Error al cargar el empleado");
-      return;
+      if (respuesta.status === 404) {
+        showErrorToast("Empleado no encontrado.");
+      } else {
+        showErrorToast("Error al cargar los datos del empleado.");
+      }
+      return null;
     }
 
     const empleado = await respuesta.json();
     return empleado;
   } catch (error) {
-    showErrorToast("Ha ocurrido un error, intenta nuevamente más tarde");
-    console.log(error);
+    showErrorToast("Error de red al obtener empleado. Intenta nuevamente.");
+    return null;
   }
 }
 
@@ -46,22 +56,26 @@ export async function crearEmpleado(empleado) {
     })
 
     if (!respuesta.ok) {
-      showErrorToast("Error al registrar el empleado");
-      console.log(respuesta);
-      return;
+      if (respuesta.status === 422) { // Validation Error based on OpenAPI of backend
+        const errorData = await respuesta.json().catch(() => null);
+        const input = errorData?.detail?.[0]?.loc?.[1] || "input";
+        const detail = errorData?.detail?.[0]?.msg || "Datos inválidos. Verifica la información.";
+
+        const message = messages[detail] || detail;
+        const campo = mapFields[input] || input;
+        showErrorToast(`${campo}: ${message}`);
+      } else {
+        showErrorToast("Error al registrar el empleado. Código: " + respuesta.status);
+      }
+      return null;
     }
 
-    if (respuesta.status === 400) {
-      showErrorToast("Datos inválidos");
-      return;
-    }
-    
     showSuccessToast("Empleado registrado correctamente");
-    
+
     return await respuesta.json();
   } catch (error) {
-    console.log(error);
-    showErrorToast("Ha ocurrido un error, intenta nuevamente más tarde");
+    showErrorToast("Error de red al registrar empleado. Intenta nuevamente.");
+    return null;
   }
 }
 
@@ -72,19 +86,29 @@ export async function actualizarSalario(id, nuevoEmpleado) {
       body: JSON.stringify(nuevoEmpleado),
       headers: {
         "Content-Type": "application/json",
+        "accept": "application/json",
       }
     })
 
     if (!respuesta.ok) {
-      showErrorToast("Error al actualizar el salario");
-      return;
+      if (respuesta.status === 422) { // Validation Error based on OpenAPI of backend
+        const errorData = await respuesta.json().catch(() => null);
+        const detail = errorData?.detail?.[0]?.msg || "Datos inválidos para actualizar.";
+        showErrorToast(`Error de validación: ${detail}`);
+      } else if (respuesta.status === 404) {
+        showErrorToast("Empleado no encontrado para actualizar.");
+      }
+      else {
+        showErrorToast("Error al actualizar los datos del empleado. Código: " + respuesta.status);
+      }
+      return null;
     }
 
-    showSuccessToast("Salario actualizado correctamente");    
+    showSuccessToast("Datos del empleado actualizados correctamente");
 
     return await respuesta.json();
   } catch (error) {
-    showErrorToast("Ha ocurrido un error, intenta nuevamente más tarde");
-    console.log(error);
+    showErrorToast("Error de red al actualizar empleado. Intenta nuevamente.");
+    return null;
   }
 }
