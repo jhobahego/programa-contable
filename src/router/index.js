@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import EmpleadosView from '../views/empleado/EmpleadosView.vue'
 import DetailView from '../views/empleado/DetailView.vue'
 import FormCreator from '../components/forms/FormCreator.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/registro',
       name: 'registro',
       component: FormCreator
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundView
     }
   ]
 })
