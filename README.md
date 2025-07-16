@@ -1,40 +1,62 @@
-# calculos-empleado
+# FinanzApp - Sistema de Gestión Contable
 
-This template should help get you started developing with Vue 3 in Vite.
+Aplicación web para la gestión y cálculo de deducciones de empleados (pensión y salud), desarrollada con Vue 3 y Vite.
 
-## Recommended IDE Setup
+Api para ser consumida por este [Frontend](https://github.com/jhobahego/programa-contable)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## ✨ Características
 
-## Customize configuration
+- 📋 Gestión completa de empleados
+- 💰 Cálculo automático de deducciones (pensión y salud)
+- 🔍 Búsqueda y filtrado de empleados
+- 📱 Interfaz responsive con tema claro/oscuro
+- 🚀 Notificaciones toast integradas
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## 🛠️ Tecnologías
 
-## Project Setup
+- **Vue 3** - Framework principal
+- **Vue Router** - Navegación
+- **Vite** - Build tool y dev server
+- **Vue Toastification** - Sistema de notificaciones
 
-```sh
+## ⚡ Instalación
+
+1. Instalar dependencias:
+```bash
 pnpm install
 ```
 
-### Add Environment Variables
-```sh
-VITE_API_URL=your_api_url
+2. Configurar variables de entorno:
+```bash
+# Crear archivo .env
+VITE_API_URL=http://localhost:3000
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
+3. Ejecutar en desarrollo:
+```bash
 pnpm dev
 ```
 
-### Compile and Minify for Production
+## 📦 Scripts Disponibles
 
-```sh
-pnpm build
+| Comando | Descripción |
+|---------|-------------|
+| `pnpm dev` | Servidor de desarrollo |
+| `pnpm build` | Build para producción |
+| `pnpm preview` | Vista previa del build |
+| `pnpm lint` | Linter con ESLint |
+
+## 🏗️ Estructura del Proyecto
+
+```
+src/
+├── components/     # Componentes reutilizables
+├── views/         # Páginas principales
+├── services/      # Servicios de API
+├── composables/   # Lógica reutilizable
+└── router/        # Configuración de rutas
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## 🔧 Configuración Recomendada
 
-```sh
-pnpm lint
-```
+**Editor:** [VSCode](https://code.visualstudio.com/) + [Vue Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
